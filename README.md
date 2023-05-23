@@ -161,3 +161,20 @@ kubectl get pod,deploy,svc -n airflow-cluster
 # Get Airflow UI url
 minikube service airflow-webserver -n airflow-cluster --url
 ```
+
+## Cleanup
+    
+```bash
+# Delete Airflow cluster
+helm uninstall airflow -n airflow-cluster
+```
+
+```bash
+# Delete namespace
+kubectl delete namespace airflow-cluster
+```
+
+```bash
+# Stop Minikube
+minikube stop
+```
