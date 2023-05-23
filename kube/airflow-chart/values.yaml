@@ -46,10 +46,10 @@ securityContext: {}
 airflowHome: /opt/airflow
 
 # Default airflow repository -- overridden by all the specific images below
-defaultAirflowRepository: apache/airflow
+defaultAirflowRepository: premdocker2022/airflow # apache/airflow
 
 # Default airflow tag to deploy
-defaultAirflowTag: "2.5.3"
+defaultAirflowTag: "v1" #"2.5.3"
 
 # Default airflow digest. If specified, it takes precedence over tag
 defaultAirflowDigest: ~
@@ -239,7 +239,7 @@ rbac:
 
 # Airflow executor
 # One of: LocalExecutor, LocalKubernetesExecutor, CeleryExecutor, KubernetesExecutor, CeleryKubernetesExecutor
-executor: "KubernetesExecutor" # "CeleryExecutor"
+executor: "KubernetesExecutor"
 
 # If this is true and using LocalExecutor/KubernetesExecutor/CeleryKubernetesExecutor, the scheduler's
 # service account will have access to communicate with the api-server and launch pods.
@@ -1962,12 +1962,12 @@ dags:
     ## optional subpath for dag volume mount
     subPath: ~
   gitSync:
-    enabled: true
+    enabled: True
 
     # git repo clone url
     # ssh example: git@github.com:apache/airflow.git
     # https example: https://github.com/apache/airflow.git
-    repo: ssh://git@github.com:surawut-jirasaktavee/deploy-airflow-on-kube.git
+    repo: git@github.com:surawut-jirasaktavee/airflow-dags.git
     branch: main
     rev: HEAD
     depth: 1
@@ -1975,7 +1975,7 @@ dags:
     maxFailures: 0
     # subpath within the repo where dags are located
     # should be "" if dags are at repo root
-    subPath: "src/airflow/dags"
+    subPath: "dags/"
     # if your repo needs a user name password
     # you can load them to a k8s secret like the one below
     #   ---
@@ -2002,7 +2002,7 @@ dags:
     #     # key needs to be gitSshKey
     #     gitSshKey: <base64_encoded_data>
     # and specify the name of the secret below
-    # sshKeySecret: airflow-ssh-secret
+    sshKeySecret: airflow-ssh-git-secret
     #
     # If you are using an ssh private key, you can additionally
     # specify the content of your known_hosts file, example:
