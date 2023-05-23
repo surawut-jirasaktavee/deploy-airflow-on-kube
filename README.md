@@ -72,6 +72,22 @@ mkdir -p kube/airflow-chart
 helm show values apache-airflow/airflow > kube/airflow-chart/values.yaml
 ```
 
+
+### Change AirFlow to use KubernetesExecutor
+
+```yaml
+# Airflow executor
+# One of: LocalExecutor, LocalKubernetesExecutor, CeleryExecutor, KubernetesExecutor, CeleryKubernetesExecutor
+executor: "KubernetesExecutor"
+```
+
+```bash
+# Upgrade Airflow cluster
+helm upgrade airflow apache-airflow/airflow \
+    --namespace airflow-cluster \
+    -f kube/airflow-chart/values.yaml
+```
+
 ## Sync AirFlow dag folder with another Git repository with SSH
 
 ### Github SSH key
